@@ -1,5 +1,5 @@
 OPTION(irr::video::E_DRIVER_TYPE, driver_type, irr::video::EDT_COUNT)
-#if (IRRLICHT_VERSION_MAJOR==1 && IRRLICHT_VERSION_MINOR==9)
+#if (IRRLICHT_VERSION_MAJOR == 1 && IRRLICHT_VERSION_MINOR == 9)
 #if EDOPRO_LINUX
 OPTION_TAGGED(uint8_t, ygo::GameConfig::BoolMaybeUndefined, useWayland, 2)
 #endif
@@ -19,9 +19,9 @@ OPTION(std::wstring, gamename, L"Game")
 OPTION(std::wstring, lastdeck, L"")
 OPTION(uint32_t, lastlflist, 0)
 OPTION(uint32_t, lastallowedcards, 3)
-OPTION(uint64_t, lastDuelParam, 0x2E800) //#define DUEL_MODE_MR5
+OPTION(uint64_t, lastDuelParam, 0x2E800) // #define DUEL_MODE_MR5
 OPTION(uint32_t, lastExtraRules, 0)
-OPTION(uint32_t, lastDuelForbidden, 0) //#define DUEL_MODE_MR5_FORB
+OPTION(uint32_t, lastDuelForbidden, 0) // #define DUEL_MODE_MR5_FORB
 OPTION(uint32_t, timeLimit, 180)
 OPTION(uint32_t, team1count, 1)
 OPTION(uint32_t, team2count, 1)
@@ -34,13 +34,15 @@ OPTION(bool, noShuffleDeck, false)
 OPTION(bool, noCheckDeckContent, false)
 OPTION(bool, noCheckDeckSize, false)
 OPTION(bool, hideHandsInReplays, false)
-OPTION(ygo::GameConfig::TextFont, textfont, EPRO_TEXT("fonts/NotoSansJP-Regular.otf"), 12)
+OPTION(ygo::GameConfig::TextFont, textfont,
+       EPRO_TEXT("fonts/NotoSansJP-Regular.otf"), 12)
 OPTION(epro::path_string, numfont, EPRO_TEXT("fonts/NotoSansJP-Regular.otf"))
 #ifdef YGOPRO_USE_BUNDLED_FONT
-OPTION(ygo::GameConfig::FallbackFonts, fallbackFonts, ygo::GameConfig::TextFont{ epro::path_string{EPRO_TEXT("bundled")}, 12 })
+OPTION(ygo::GameConfig::FallbackFonts, fallbackFonts,
+       ygo::GameConfig::TextFont{epro::path_string{EPRO_TEXT("bundled")}, 12})
 #else
 OPTION(ygo::GameConfig::FallbackFonts, fallbackFonts, )
-#endif //YGOPRO_USE_BUNDLED_FONT
+#endif // YGOPRO_USE_BUNDLED_FONT
 OPTION(std::wstring, serverport, L"7911")
 OPTION(std::wstring, lasthost, L"127.0.0.1")
 OPTION(std::wstring, lastport, L"7911")
@@ -96,8 +98,10 @@ OPTION(bool, confirm_clear_deck, false)
 #endif
 OPTION_ALIASED(bool, enablemusic, enable_music, false)
 OPTION_ALIASED(bool, enablesound, enable_sound, true)
-OPTION_ALIASED_TAGGED(int, ygo::GameConfig::MusicConfig, musicVolume, music_volume, 20)
-OPTION_ALIASED_TAGGED(int, ygo::GameConfig::MusicConfig, soundVolume, sound_volume, 20)
+OPTION_ALIASED_TAGGED(int, ygo::GameConfig::MusicConfig, musicVolume,
+                      music_volume, 20)
+OPTION_ALIASED_TAGGED(int, ygo::GameConfig::MusicConfig, soundVolume,
+                      sound_volume, 20)
 OPTION(bool, loopMusic, true)
 OPTION(ygo::SoundManager::BACKEND, sound_backend, ygo::SoundManager::DEFAULT)
 OPTION(bool, saveHandTest, true)
@@ -117,3 +121,6 @@ OPTION(uint16_t, maxSideDeckSize, 15)
 OPTION(bool, native_keyboard, false)
 OPTION(bool, native_mouse, false)
 #endif
+// Card Plus settings
+OPTION(bool, modularCardRenderer, false)
+OPTION(bool, modularArtHighRes, true)

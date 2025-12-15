@@ -155,6 +155,7 @@ local ygopro_config=function(static_core)
 
 	filter { "system:windows", "action:vs*" }
 		files "ygopro.exe.manifest"
+		linkoptions { "/FORCE:MULTIPLE" }
 
 	filter { "system:windows", "options:no-direct3d" }
 		defines "NO_IRR_COMPILE_WITH_DIRECT3D_9_"

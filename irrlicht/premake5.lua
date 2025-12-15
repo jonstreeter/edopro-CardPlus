@@ -6,6 +6,12 @@ project "Irrlicht"
 	exceptionhandling "Off"
 	rtti "Off"
 	files { "**.cpp", "**.c", "**.cxx", "**.hpp", "**.h" }
+	excludes { 
+		"**/*mac.c", "**/*osx.mm", "**/*macosx.cpp", "src/Irrlicht/MacOSX/**",
+		"**/example.c", "**/dlltest.c", "**/ spewG.c", "**/unzcrash.c", 
+		"**/*dos.c", "**/jmemdos.c",
+		"**/bzip2.c", "**/bzip2recover.c"
+	}
 	warnings "Default"
 
 	filter "options:no-direct3d"
