@@ -1,39 +1,72 @@
-# [Project Ignis](https://github.com/ProjectIgnis): EDOPro
+# EDOPro CardPlus
 
-The bleeding-edge automatic duel simulator, a fork of the [YGOPro client](https://github.com/Fluorohydride/ygopro).
+A fork of [EDOPro](https://github.com/edo9300/edopro) featuring an enhanced **modular card renderer** that displays cards with high-quality, dynamically composed artwork similar to official digital Yu-Gi-Oh! games.
 
-All YGOPro forks and known automatic duel simulators are powered by the [YGOPro core (ocgcore)](https://github.com/Fluorohydride/ygopro-core), an automated scripting engine for the Yu-Gi-Oh! Official Card Game. EDOPro is powered by our own [ocgcore fork](https://github.com/edo9300/ygopro-core).
+![CardPlus Preview](docs/cardplus-preview.png)
 
-Due to many accumulated changes in this client and its core, it is incompatible with simulators not derived from this fork.
+## Features
 
-This repository is for the game client only. Related Ignis projects:
-- [Canonical card script collection](https://github.com/ProjectIgnis/CardScripts)
-- [Canonical card databases collection](https://github.com/ProjectIgnis/BabelCdb)
-- [WindBot Ignite](https://github.com/ProjectIgnis/windbot/)
+### Modular Card Renderer
+- **Dynamic card composition** - Cards are rendered in real-time using separate texture layers for frames, art, icons, and text
+- **High-resolution output** - 1180x1720 pixel card renders for crisp display
+- **Authentic styling** - Uses official-style fonts and layouts matching Master Duel/Duel Links aesthetics
+- **Support for all card types**:
+  - Monster cards (Normal, Effect, Fusion, Synchro, Xyz, Link, Ritual)
+  - Pendulum cards with proper scale displays
+  - Spell and Trap cards with type icons
+- **Intelligent text scaling** - Effect text automatically sizes to fit the text box
 
-## Contributing
+### Enhanced UI
+- Bilinear filtering for smooth card scaling
+- Proper text alignment and spacing throughout
 
-Please keep all usage questions and Windows and macOS bug reports on Discord; do not open an issue or pull request for this purpose.
-We are not taking suggestions or feature requests and the issue tracker is not to be used for this purpose either.
+## Download
 
-Otherwise, pull requests are welcome! It might take some time for them to be evaluated since we are pretty swamped with a lot work to be done.
+### Windows Build
+📥 **[Download Latest Windows Release](https://github.com/jonstreeter/edopro-CardPlus/releases)**
 
-Check out the [wiki](https://github.com/edo9300/edopro/wiki/) for possibly outdated build instructions and a partial user manual.
+### Setup Instructions
+1. Download and extract the release
+2. Run `setup_assets.bat` to download required game assets (textures, sounds, card databases)
+3. Launch `ygoprodll.exe`
 
-## Project Ignis
+## Building from Source
 
-We are an international, open-source collaboration staffed entirely by volunteers and we welcome support on our projects.
-Reach out to us on Discord to learn how to contribute and join!
+### Prerequisites
+- Visual Studio 2022
+- vcpkg (for dependencies)
+- premake5
 
-_Ignis_ is the fire and light of knowledge passed from the gods to humanity in Greco-Roman mythology.
-This represents our vision for all of our projects and work and recognizes the contribution of every individual on the team.
+### Build Steps
+```bash
+# Generate project with sound support
+premake5 vs2022 --sound=miniaudio
 
-[Debut announcement on Reddit](https://www.reddit.com/r/yugioh/comments/fvdn7v/presenting_project_ignis_edopro_the_opensource/).
+# Build Release configuration
+msbuild build/ygo.sln /p:Configuration=Release /p:Platform=Win32
+```
+
+## Project Structure
+
+```
+CardPlus-specific files:
+├── gframe/
+│   ├── modular_card_renderer.cpp/h  # Core rendering engine
+│   └── modular_art_manager.cpp/h    # Art texture management
+├── textures/modular/
+│   ├── card_frame/                   # Card frame overlays
+│   ├── font/                         # Typography assets
+│   └── icon/                         # Attribute/type icons
+```
+
+## Credits
+
+- **EDOPro** - [edo9300/edopro](https://github.com/edo9300/edopro)
+- **Project Ignis** - Original EDOPro development team
+- **daominah-card-engine** - Reference implementation for card layout
 
 ## License
 
-EDOPro is free/libre and open source software licensed under the GNU Affero General Public License, version 3 or later.
-Dependencies and resources may be provided under different licenses.
-Please see [LICENSE](https://github.com/edo9300/edopro/blob/master/LICENSE) and [COPYING](https://github.com/edo9300/edopro/blob/master/COPYING) for more details.
+EDOPro CardPlus is free/libre and open source software licensed under the GNU Affero General Public License, version 3 or later.
 
 Yu-Gi-Oh! is a trademark of Shueisha and Konami. This project is not affiliated with or endorsed by Shueisha or Konami.

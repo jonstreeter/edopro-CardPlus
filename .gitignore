@@ -45,3 +45,25 @@ premake5.exe
 !/irrlicht/defines.lua
 bundled_font.cpp
 NotoSansJP-Regular.otf
+
+# Development scripts (not for distribution)
+quick_build.bat
+clean_build.bat
+build_and_run.bat
+run_app.bat
+setup_assets.bat
+
+# Standard EDOPro assets (downloaded separately)
+sound/
+skin/
+cards.cdb
+config/
+EDOPro_base/
+
+# Keep CardPlus-specific textures, ignore standard ones
+textures/*.png
+textures/*.jpg
+textures/Backup/
+textures/fonts/
+textures/roombrowser/
+!textures/modular/

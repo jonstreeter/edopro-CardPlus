@@ -1,73 +1,150 @@
 @echo off
-setlocal
+setlocal enabledelayedexpansion
+
 echo ========================================
-echo  EDOPro Asset Setup Script
+echo  EDOPro CardPlus - Asset Setup
 echo ========================================
 echo.
-echo This script will download and set up all required assets for EDOPro.
-echo It will download the full ProjectIgnis Distribution (skins, fonts, etc.).
-echo.
 
-set "DIST_URL=https://github.com/ProjectIgnis/Distribution/archive/refs/heads/master.zip"
-set "ZIP_FILE=distribution.zip"
-set "EXTRACT_DIR=distribution_temp"
-
-echo 1. Downloading assets from %DIST_URL%...
-powershell -Command "Invoke-WebRequest -Uri '%DIST_URL%' -OutFile '%ZIP_FILE%'"
-if %errorlevel% neq 0 (
-    echo [ERROR] Download failed!
-    goto :cleanup
+:: Check if we're in the right directory
+if not exist "ygoprodll.exe" (
+    echo ERROR: Please run this script from the EDOPro CardPlus directory
+    echo        where ygoprodll.exe is located.
+    pause
+    exit /b 1
 )
 
+:: Create directories if they don't exist
+if not exist "sound" mkdir sound
+if not exist "skin" mkdir skin
+if not exist "config" mkdir config
+if not exist "textures" mkdir textures
+
+echo Downloading EDOPro assets...
 echo.
-echo 2. Extracting assets...
-if exist "%EXTRACT_DIR%" rmdir /s /q "%EXTRACT_DIR%"
-powershell -Command "Expand-Archive -Path '%ZIP_FILE%' -DestinationPath '%EXTRACT_DIR%'"
-if %errorlevel% neq 0 (
-    echo [ERROR] Extraction failed!
-    goto :cleanup
+
+:: Asset URLs (from Project Ignis distribution)
+set ASSETS_URL=https://github.com/ProjectIgnis/Distribution/releases/latest/download
+
+:: Download sounds
+echo [1/4] Downloading sound files...
+if not exist "sound\summon.wav" (
+    echo       Downloading sound pack...
+    powershell -Command "& {Invoke-WebRequest -Uri 'https://github.com/ProjectIgnis/Distribution/raw/master/sound.zip' -OutFile 'sound_temp.zip' -UseBasicParsing}" 2>nul
+    if exist "sound_temp.zip" (
+        powershell -Command "Expand-Archive -Path 'sound_temp.zip' -DestinationPath '.' -Force" 2>nul
+        del sound_temp.zip 2>nul
+        echo       Sound files installed!
+    ) else (
+        echo       Could not download sounds. You can manually copy sound files later.
+    )
+) else (
+    echo       Sound files already present.
 )
 
-echo.
-echo 3. Installing assets...
-REM The zip structure is usually Distribution-master/
-
-REM Check if extracted folder exists
-if not exist "%EXTRACT_DIR%\Distribution-master" (
-    echo [ERROR] Unexpected zip structure.
-    goto :cleanup
+:: Download textures
+echo [2/4] Checking textures...
+if not exist "textures\cover.png" (
+    echo       Downloading texture pack...
+    powershell -Command "& {Invoke-WebRequest -Uri 'https://github.com/ProjectIgnis/Distribution/raw/master/textures.zip' -OutFile 'textures_temp.zip' -UseBasicParsing}" 2>nul
+    if exist "textures_temp.zip" (
+        powershell -Command "Expand-Archive -Path 'textures_temp.zip' -DestinationPath '.' -Force" 2>nul
+        del textures_temp.zip 2>nul
+        echo       Textures installed!
+    ) else (
+        echo       Could not download textures. You can manually copy texture files later.
+    )
+) else (
+    echo       Textures already present.
 )
 
-REM Move Skins
-echo   - Installing skins...
-if not exist "skins" mkdir "skins"
-xcopy /E /I /Y "%EXTRACT_DIR%\Distribution-master\skin\*" "skins\" >nul
+:: Download default skin
+echo [3/4] Checking skins...
+if not exist "skin\skin.xml" (
+    echo       Creating default skin directory...
+    if not exist "skin\Default" mkdir "skin\Default"
+    echo       Skins can be downloaded from EDOPro distribution.
+) else (
+    echo       Skins already present.
+)
 
-REM Move Fonts (if necessary, though we have them in textures/fonts/ mainly)
-REM echo   - Installing fonts...
-REM xcopy /E /I /Y "%EXTRACT_DIR%\Distribution-master\fonts\*" "textures\fonts\" >nul
-
-REM Move Sound (if we want sounds)
-if not exist "sound" mkdir "sound"
-echo   - Installing sounds...
-xcopy /E /I /Y "%EXTRACT_DIR%\Distribution-master\sound\*" "sound\" >nul
-
-echo.
-echo 4. Updating config for default skin...
-REM Copy the default skin name into system.conf if commented out
-powershell -Command "(Get-Content config\system.conf) -replace '# skin = Purple - Obsessed', 'skin = Purple - Obsessed' | Set-Content config\system.conf"
-
-echo.
-echo 5. Deploying to bin/release...
-call quick_build.bat
+:: Setup config
+echo [4/4] Checking configuration...
+if not exist "config\system.conf" (
+    echo       Creating default configuration...
+    (
+        echo #config file
+        echo use_d3d = 0
+        echo antialias = 2
+        echo errorlog = 1
+        echo nickname = Player
+        echo gamename = Game
+        echo lastdeck = 
+        echo textfont = fonts/NotoSansJP-Regular.otf 14
+        echo numfont = fonts/NotoSansJP-Regular.otf
+        echo serverport = 7911
+        echo lastip = 127.0.0.1
+        echo lastport = 7911
+        echo roompass = 
+        echo automonsterpos = 0
+        echo autospellpos = 0
+        echo randompos = 0
+        echo autochain = 0
+        echo waitchain = 0
+        echo showchain = 0
+        echo mute_opponent = 0
+        echo mute_spectators = 0
+        echo use_lflist = 1
+        echo default_lflist = 0
+        echo default_rule = 5
+        echo hide_setname = 0
+        echo hide_hint_button = 0
+        echo control_mode = 0
+        echo draw_field_spell = 1
+        echo separate_clear_button = 1
+        echo auto_search_limit = -1
+        echo search_multiple_keywords = 1
+        echo ignore_deck_changes = 0
+        echo default_ot = 1
+        echo enable_bot_mode = 1
+        echo quick_animation = 0
+        echo auto_save_replay = 0
+        echo show_unofficial = 1
+        echo show_scope_label = 1
+        echo hide_passcode_scope = 0
+        echo show_fps = 1
+        echo draw_single_chain = 0
+        echo skin_index = -1
+        echo hide_hand_count = 0
+        echo prefer_expansion_script = 1
+        echo window_maximized = 0
+        echo window_width = 1024
+        echo window_height = 640
+        echo resize_popup_menu = 0
+        echo enable_pendulum_scale = 1
+        echo chain_buttons = 1
+        echo vsync = 1
+        echo max_fps = 60
+        echo dpi_scale = 1.000000
+        echo accurate_bg_resize = 1
+        echo enable_music = 1
+        echo enable_sound = 1
+        echo music_volume = 0.200000
+        echo sound_volume = 0.200000
+        echo save_hand_test_replay = 0
+        echo loop_music = 1
+        echo discord_integration = 0
+    ) > config\system.conf
+    echo       Configuration created!
+) else (
+    echo       Configuration already present.
+)
 
 echo.
 echo ========================================
 echo  Asset Setup Complete!
 echo ========================================
-
-:cleanup
-if exist "%ZIP_FILE%" del "%ZIP_FILE%"
-if exist "%EXTRACT_DIR%" rmdir /s /q "%EXTRACT_DIR%"
-endlocal
+echo.
+echo You can now run ygoprodll.exe to start the game.
+echo.
 pause
