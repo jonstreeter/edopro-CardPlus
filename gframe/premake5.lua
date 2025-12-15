@@ -130,7 +130,9 @@ local ygopro_config=function(static_core)
 				end
 			filter {}
 		end
+		print("DEBUG: sounds.miniaudio = " .. tostring(sounds.miniaudio))
 		if sounds.miniaudio then
+			print("DEBUG: Adding YGOPRO_USE_MINIAUDIO define")
 			defines "YGOPRO_USE_MINIAUDIO"
 			files "SoundBackends/miniaudio/**"
 			filter { "system:ios", "files:**sound_miniaudio.cpp" }
