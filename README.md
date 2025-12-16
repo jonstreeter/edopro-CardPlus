@@ -28,8 +28,10 @@ A fork of [EDOPro](https://github.com/edo9300/edopro) featuring an enhanced **mo
 ### Installation
 1. Download and extract the ZIP file
 2. Run `ygoprodll.exe`
+3. Go to **Settings → Graphics** and enable **"Use modular card renderer"**
+4. **Restart the application** for the new renderer to take effect
 
-That's it! All game assets are included in the release.
+All game assets are included in the release.
 
 ### Network Play
 CardPlus is **fully compatible** with regular EDOPro for online play. You can connect to the official ProjectIgnis servers and play against users running standard EDOPro.
