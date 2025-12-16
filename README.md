@@ -25,10 +25,14 @@ A fork of [EDOPro](https://github.com/edo9300/edopro) featuring an enhanced **mo
 ### Windows Build
 📥 **[Download Latest Windows Release](https://github.com/jonstreeter/edopro-CardPlus/releases)**
 
-### Setup Instructions
-1. Download and extract the release
-2. Run `setup_assets.bat` to download required game assets (textures, sounds, card databases)
-3. Launch `ygoprodll.exe`
+### Installation
+1. Download and extract the ZIP file
+2. Run `ygoprodll.exe`
+
+That's it! All game assets are included in the release.
+
+### Network Play
+CardPlus is **fully compatible** with regular EDOPro for online play. You can connect to the official ProjectIgnis servers and play against users running standard EDOPro.
 
 ## Building from Source
 
