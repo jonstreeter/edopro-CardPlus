@@ -67,3 +67,5 @@ textures/Backup/
 textures/fonts/
 textures/roombrowser/
 !textures/modular/
+# Development tools
+tools/
