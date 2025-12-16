@@ -29,6 +29,14 @@
               ],
     "urls":  [
                  {
+                     "url":  "https://mdygo2048.daominah.uk/{}.png",
+                     "type":  "pic"
+                 },
+                 {
+                     "url":  "https://mdygo.daominah.uk/{}.png",
+                     "type":  "pic"
+                 },
+                 {
                      "url":  "https://images.ygoprodeck.com/images/cards/{}.jpg",
                      "type":  "pic"
                  },
